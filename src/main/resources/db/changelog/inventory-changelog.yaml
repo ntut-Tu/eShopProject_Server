@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: quinn
+      changes:
+        - createTable:
+            tableName: inventory
+            columns:
+              - column:
+                  name: inventory_id
+                  type: SERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: size
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: stock
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 5
+      author: quinn
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: inventory
+            baseColumnNames: product_id
+            referencedTableName: products
+            referencedColumnNames: product_id
+            constraintName: fk_inventory_product
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: CASCADE
